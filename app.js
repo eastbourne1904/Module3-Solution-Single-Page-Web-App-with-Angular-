@@ -1,29 +1,18 @@
 (function() {
     'use strict';
-    // Define directive and service methods where the factory methods are
-    // registered with the angular module
-
-    // Create angular module and name it NarrowItDownApp
     angular.module('NarrowItDownApp', [])
-    // Resister Directives .controller, .directive, etc.
-
-        // Declare and create a NarrowItDownController with directive name 'NarrowItDownController'
         .controller('NarrowItDownController', NarrowItDownController)
-        // Declare and create MenuSearchService
         .service('MenuSearchService', MenuSearchService)
-
         .constant('APIBasePath', 'https://davids-restaurant.herokuapp.com')
-        // Declare and create foundItems directive.
         .directive('foundItems', FoundItems);
 
-// Define factory function that tells compiler to run through list items from directive 'foundItems'
     function FoundItems() {
-        var ddo = {  //declare ddo
-            templateUrl: 'foundItems.html', //output from html foundItems function
-            restrict: 'EA', //<doc data="some_data"></doc> and <div Doc></div>
-            scope: {   //define scope items
-                items: '<', //one-way binding
-                onRemove: '&' //provide an on-remove attribute
+        var ddo = {
+            templateUrl: 'foundItems.html',
+            restrict: 'E',
+            scope: {
+                items: '<',
+                onRemove: '&'
             },
             controller: FoundItemsDirectiveController,
             controllerAs: 'narrowIt',
@@ -42,11 +31,8 @@
         };
     }
 
-// The NarrowItDownController should be injected with the MenuSearchService.
     NarrowItDownController.$inject = ['MenuSearchService'];
 
-// The controller should call the getMatchedMenuItems method when appropriate and
-// store the result in a property called found attached to the controller instance.
     function NarrowItDownController(MenuSearchService) {
         var narrowIt = this;
         narrowIt.narrowItDown = function() {
